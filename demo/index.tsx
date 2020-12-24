@@ -2,13 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'tachyons'
 import 'tachyons-extra'
-import { hello } from '../dist/lib/hello'
+import { Page } from './components/Page'
 
 const App = () => {
-  return <div className="ba w-100 h4 bg-red">{hello('mitico')}</div>
+  return <Page />
 }
 
 function renderApp() {
   ReactDOM.render(<App />, document.getElementById('app'))
 }
 renderApp()
+

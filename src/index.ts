@@ -1,1 +1,1 @@
-export { hello } from './lib/hello'
+export { computeSquareSlices } from './lib/square-slice'
