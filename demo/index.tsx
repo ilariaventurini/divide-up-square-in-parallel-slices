@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import './assets/main.css'
 import { Page } from './components/Page'
 
 const App = () => {
