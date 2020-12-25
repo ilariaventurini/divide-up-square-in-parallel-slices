@@ -12,3 +12,26 @@ export function randomWithFixedSum(amount: number, sum: number): number[] {
   const diff = generated.reduce((a, g) => a + g, 0) - sum
   return diff ? randomWithFixedSum(amount, sum) : generated
 }
+
+/**
+ * Return a random hex color.
+ */
+export function randomColor(): string {
+  return `#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')}`
+}
+
+/**
+ * Return a random number in range.
+ */
+export function randomIntegerInRange(range: [number, number]): number {
+  const [min, max] = range
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+/**
+ * Return value rounded using two decimals.
+ * @param value value to round
+ */
+export function roundToTwoDecimals(value: number) {
+  return Math.round((value + Number.EPSILON) * 100) / 100
+}
