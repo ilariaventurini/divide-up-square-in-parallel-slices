@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'tachyons'
-import 'tachyons-extra'
+import './assets/main.css'
 import { Page } from './components/Page'
 
 const App = () => {
