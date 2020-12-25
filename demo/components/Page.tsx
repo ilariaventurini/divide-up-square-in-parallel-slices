@@ -9,9 +9,9 @@ export const Page = () => {
   console.log('res: ', res);
 
   return (
-    <div className="-page ba bw1 flex flex-column flex-center">
+    <div className="-page">
       <Square />
-      <div className="ba pa2">Again!</div>
+      <div className="">Again!</div>
     </div>
   )
 }

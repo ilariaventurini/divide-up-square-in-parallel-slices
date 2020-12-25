@@ -11,8 +11,8 @@ export const Square = () => {
   console.log('slicesInfo: ', slicesInfo);
 
   return (
-    <div className="-square ma3">
-      <svg className="bw2 b--gold" width={SIDE} height={SIDE} x={START_POINT.x} y={START_POINT.y} >
+    <div className="-square">
+      <svg className="" width={SIDE} height={SIDE} x={START_POINT.x} y={START_POINT.y} >
         {slicesInfo.map((wave, i) => {
           const {
             percentage,
@@ -42,7 +42,7 @@ export const Square = () => {
                 <circle className="-ldb" cx={ldb.x} cy={ldb.y} r={5} fill="purple" />
                 <path
                   key={i}
-                  className="pointer"
+                  className=""
                   d={path}
                   stroke={'black'}
                   strokeWidth={1}
