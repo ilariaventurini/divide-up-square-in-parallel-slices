@@ -14,7 +14,6 @@ const datasetInit = generateData(3)
 export const Page = () => {
   const [dataset, setDataset] = useState(datasetInit)
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  console.log('dataset: ', dataset);
 
   const generateNewDataset = () => {
     const counter = randomIntegerInRange(COUNTER_EXTENT)

@@ -223,6 +223,24 @@ function computeSlices<T extends Percentage>(
     }
   })
 
+  // add slice path
+  const withSlicePath = withHeightAndDiagonalsLenght.map((datum) => {
+    const { vertices } = datum
+    // @ts-ignore
+    const { ldt, ldb, rdt, rdb, rt, lb } = vertices
+
+    const slicePath = `
+            M ${ldt.x} ${ldt.y}
+            L ${rt.x} ${rt.y}
+            L ${rdt.x} ${rdt.y}
+            L ${rdb.x} ${rdb.y}
+            L ${lb.x} ${lb.y}
+            L ${ldb.x} ${ldb.y}
+            Z
+          `
+    return { ...datum, slicePath }
+  })
+
   // @ts-ignore
-  return withHeightAndDiagonalsLenght
+  return withSlicePath
 }

@@ -41,4 +41,5 @@ export type SliceInfo<T> = CumulativePercentage<T> & {
   vertices: Vertices
   leftDiagonalLenght: number
   rightDiagonalLenght: number
+  slicePath: string
 }
