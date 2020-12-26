@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { computeSquareSlices } from '../../dist';
-import { randomWithFixedSum } from '../utils';
 import { Datum } from './Page';
 
-const SIDE = 270
+export const SIDE = 250
 const START_POINT = { x: 0, y: 0 }
 export const FILL_OPACITY = 0.6
 export const FILL_HOVERED_OPACITY = 0.8

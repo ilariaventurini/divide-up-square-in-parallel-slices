@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { randomColor, randomIntegerInRange, randomWithFixedSum, roundToTwoDecimals } from '../utils';
-import { FILL_HOVERED_OPACITY, FILL_OPACITY, Square } from './Square';
+import { FILL_HOVERED_OPACITY, FILL_OPACITY, SIDE, Square } from './Square';
 
 export interface Datum {
   percentage: number
@@ -26,29 +26,48 @@ export const Page = () => {
     <div className="-page w-full h-full flex flex-row justify-center items-center">
       <div className="flex">
 
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col">
           <Square dataset={dataset} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
-          <div className="cursor-pointer select-none mt-4 px-3 py-1 bg-gray-800 text-white hover:bg-gray-700 font-light rounded-sm" onClick={generateNewDataset}>Again!</div>
+          <Legend className="md:hidden mt-4 flex flex-wrap justify-between" dataset={dataset} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
+          <Button className="flex justify-center" onClick={generateNewDataset} />
         </div>
 
-        <div className="ml-4">
-          {dataset.map((datum: Datum, i: number) => {
-            const { percentage, color } = datum
-            const isHovered = i === hoveredIndex
-            return (
-              <div
-                key={i}
-                className="flex flex-row items-center select-none cursor-pointer"
-                onPointerOver={() => setHoveredIndex(i)}
-                onPointerOut={() => setHoveredIndex(null)}
-              >
-                <div className="w-4 h-4 mr-2 rounded-full" style={{ backgroundColor: color, opacity: isHovered ? FILL_HOVERED_OPACITY : FILL_OPACITY }}></div>
-                <div className={`text-gray-800 ${isHovered ? 'font-normal' : 'font-light'}`} style={{ minWidth: 100 }}>{`${roundToTwoDecimals(percentage * 100)}%`}</div>
-              </div>
-            )
-          })}
-        </div>
+        <Legend className="ml-4 hidden md:block" dataset={dataset} hoveredIndex={hoveredIndex} setHoveredIndex={setHoveredIndex} />
       </div>
+    </div>
+  )
+}
+
+const Legend = ({ className = "", dataset, hoveredIndex, setHoveredIndex }) => {
+  return (
+    <div className={`${className}`} style={{ maxWidth: SIDE }}>
+      {dataset.map((datum: Datum, i: number) => {
+        const { percentage, color } = datum
+        const isHovered = i === hoveredIndex
+        return (
+          <div
+            key={i}
+            className="flex flex-row items-center select-none cursor-pointer"
+            onPointerOver={() => setHoveredIndex(i)}
+            onPointerOut={() => setHoveredIndex(null)}
+          >
+            <div className="w-4 h-4 mr-2 rounded-full" style={{ backgroundColor: color, opacity: isHovered ? FILL_HOVERED_OPACITY : FILL_OPACITY }}></div>
+            <div className={`text-gray-800 ${isHovered ? 'font-normal' : 'font-light'}`} style={{ minWidth: 60 }}>{`${roundToTwoDecimals(percentage * 100)}%`}</div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+const Button = ({ className = "", onClick }) => {
+  return (
+    <div className={`${className}`}>
+      <div
+        className="cursor-pointer select-none mt-4 flex justify-center items-center bg-gray-800 text-white hover:bg-gray-700 font-light rounded-sm"
+        onClick={onClick}
+        style={{ width: 80, height: 30 }}
+      >Again!</div>
     </div>
   )
 }
