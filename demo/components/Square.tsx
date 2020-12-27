@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { computeSquareSlices } from '../../dist';
 import { Datum } from './Page';
 
-export const SIDE = 250
+export const SQUARE_SIDE = 250
 const START_POINT = { x: 0, y: 0 }
 export const FILL_OPACITY = 0.6
 export const FILL_HOVERED_OPACITY = 0.8
@@ -15,14 +15,15 @@ interface Props {
 }
 
 export const Square: React.FC<Props> = ({ className = "", dataset, hoveredIndex, setHoveredIndex }) => {
-  const slicesInfo = computeSquareSlices(dataset, SIDE, START_POINT)
+  const slicesInfo = computeSquareSlices(dataset, SQUARE_SIDE)
+  console.log('slicesInfo: ', slicesInfo);
 
   return (
     <div className={`-square ${className}`}>
-      <svg width={SIDE} height={SIDE} x={START_POINT.x} y={START_POINT.y} >
+      <svg width={SQUARE_SIDE} height={SQUARE_SIDE} x={START_POINT.x} y={START_POINT.y} >
         {slicesInfo.map((wave, i) => {
           // @ts-ignore
-          const { percentage, color, slicePath } = wave
+          const { percentage, color, path } = wave
           const isHovered = i === hoveredIndex
 
           return (
@@ -30,7 +31,7 @@ export const Square: React.FC<Props> = ({ className = "", dataset, hoveredIndex,
               <path
                 key={i}
                 className="cursor-pointer"
-                d={slicePath}
+                d={path}
                 fill={color}
                 fillOpacity={isHovered ? FILL_HOVERED_OPACITY : FILL_OPACITY}
                 onPointerOver={() => setHoveredIndex(i)}

@@ -1,20 +1,19 @@
-import { sumBy } from 'lodash'
-import { CumulativePercentage, Height, Percentage, Point, Side, SliceInfo, Vertices } from './types'
+import { sumBy, omit } from 'lodash'
+import { CumulativePercentage, Percentage, Point, SidePosition, SliceInfo, Vertices } from './types'
 import { distanceBetweenPoints } from './math-utils'
 
 /**
  * Return an array containing the slices info.
  * @param dataset dataset containing a percentage value
- * @param side square side lenght
- * @param startPoint top left square point
+ * @param squareSide square side lenght
  */
 export function computeSquareSlices<T extends Percentage>(
   dataset: T[],
-  side: number,
-  startPoint: Point
+  squareSide: number
 ): Array<SliceInfo<T>> {
   if (!dataset.length) throw new Error(`The dataset must contain at least one element.`)
-  if (side < 0) throw new Error(`Side must be a positive number. Your value is ${side}.`)
+  if (squareSide < 0)
+    throw new Error(`Side must be a positive number. Your value is ${squareSide}.`)
 
   const percentageSum = sumBy(dataset, 'percentage')
   if (Math.abs(percentageSum - 1) > 0.001)
@@ -22,7 +21,7 @@ export function computeSquareSlices<T extends Percentage>(
 
   const cumulativePercentages = computeCumulativePercentages(dataset)
 
-  return computeSlices(side, startPoint, cumulativePercentages)
+  return computeSlices(squareSide, cumulativePercentages)
 }
 
 /**
@@ -55,15 +54,14 @@ function computeCumulativePercentages<T extends Percentage>(
 /**
  * Return an array containing the slices info.
  * @param squareSide square side lenght
- * @param startPoint top left square point
  * @param dataset dataset containing cumulative percentage values
  */
 function computeSlices<T extends Percentage>(
   squareSide: number,
-  startPoint: Point,
   dataset: Array<CumulativePercentage<T>>
 ): Array<SliceInfo<T>> {
-  const { x: xs, y: ys } = startPoint
+  const xs = 0 // x start point
+  const ys = 0 // y start point
   const squareArea = squareSide * squareSide
 
   // find index of element that lay on square diagonal
@@ -73,7 +71,11 @@ function computeSlices<T extends Percentage>(
   // based on its position respect of the diagonal
   const withSide = dataset.map((datum, i) => ({
     ...datum,
-    side: (i < overSliceIndex ? 'left' : i === overSliceIndex ? 'over' : 'right') as Side,
+    sidePosition: (i < overSliceIndex
+      ? 'left'
+      : i === overSliceIndex
+      ? 'over'
+      : 'right') as SidePosition,
   }))
 
   // add area, cumulativeArea, tmpL and cumulativeL to each datum
@@ -91,12 +93,12 @@ function computeSlices<T extends Percentage>(
   const withAreaAndL = withAreaAndTmpL.map((datum, i) => {
     const isFirst = i === 0
     const isLast = i === withAreaAndTmpL.length - 1
-    const { side, cumulativeL } = datum
+    const { sidePosition, cumulativeL } = datum
     let l = null
     if (isFirst || isLast) l = cumulativeL
-    else if (side === 'left') l = cumulativeL - withAreaAndTmpL[i - 1].cumulativeL
+    else if (sidePosition === 'left') l = cumulativeL - withAreaAndTmpL[i - 1].cumulativeL
     // don't remember why +1 is necessary
-    else if (side === 'right') l = cumulativeL - withAreaAndTmpL[i + 1].cumulativeL + 1
+    else if (sidePosition === 'right') l = cumulativeL - withAreaAndTmpL[i + 1].cumulativeL + 1
     else l = 0 // 0 is is over element
     return { ...datum, l }
   })
@@ -108,11 +110,11 @@ function computeSlices<T extends Percentage>(
 
   // compute polygons coordinates of first, last and middle slices
   const withVertices = withAreaAndL.map((datum, i) => {
-    const { l, cumulativeL, side } = datum
+    const { l, cumulativeL, sidePosition } = datum
     const isFirst = i === 0
     const isLast = i === withAreaAndL.length - 1
-    const isLeft = side === 'left'
-    const isRight = side === 'right'
+    const isLeft = sidePosition === 'left'
+    const isRight = sidePosition === 'right'
 
     let vertices = {}
     if (isLeft) {
@@ -213,11 +215,9 @@ function computeSlices<T extends Percentage>(
     const rightDiagonalLenght = distanceBetweenPoints(rdt, rdb)
     return {
       ...slice,
-      height: {
-        h: height,
-        middlePointLeftDiagonal,
-        middlePointRightDiagonal,
-      } as Height,
+      height,
+      middlePointLeftDiagonal,
+      middlePointRightDiagonal,
       leftDiagonalLenght,
       rightDiagonalLenght,
     }
@@ -229,18 +229,18 @@ function computeSlices<T extends Percentage>(
     // @ts-ignore
     const { ldt, ldb, rdt, rdb, rt, lb } = vertices
 
-    const slicePath = `
-            M ${ldt.x} ${ldt.y}
-            L ${rt.x} ${rt.y}
-            L ${rdt.x} ${rdt.y}
-            L ${rdb.x} ${rdb.y}
-            L ${lb.x} ${lb.y}
-            L ${ldb.x} ${ldb.y}
-            Z
-          `
-    return { ...datum, slicePath }
+    const path = `
+      M ${ldt.x} ${ldt.y}
+      L ${rt.x} ${rt.y}
+      L ${rdt.x} ${rdt.y}
+      L ${rdb.x} ${rdb.y}
+      L ${lb.x} ${lb.y}
+      L ${ldb.x} ${ldb.y}
+      Z
+    `
+    return { ...datum, path }
   })
 
   // @ts-ignore
-  return withSlicePath
+  return withSlicePath.map((d) => omit(d, ['area', 'cumulativeArea', 'l', 'cumulativeL', 'tmpL']))
 }

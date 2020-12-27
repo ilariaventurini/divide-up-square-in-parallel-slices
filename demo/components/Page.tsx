@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { randomColor, randomIntegerInRange, randomWithFixedSum, roundToTwoDecimals } from '../utils';
-import { FILL_HOVERED_OPACITY, FILL_OPACITY, SIDE, Square } from './Square';
+import { FILL_HOVERED_OPACITY, FILL_OPACITY, SQUARE_SIDE, Square } from './Square';
 
 export interface Datum {
   percentage: number
@@ -39,7 +39,7 @@ export const Page = () => {
 
 const Legend = ({ className = "", dataset, hoveredIndex, setHoveredIndex }) => {
   return (
-    <div className={`${className}`} style={{ maxWidth: SIDE }}>
+    <div className={`${className}`} style={{ maxWidth: SQUARE_SIDE }}>
       {dataset.map((datum: Datum, i: number) => {
         const { percentage, color } = datum
         const isHovered = i === hoveredIndex

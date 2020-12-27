@@ -15,13 +15,7 @@ export interface Datum extends Percentage {
 
 export type CumulativePercentage<T> = T & Percentage & { cumulativePercentage: number }
 
-export type Side = 'left' | 'right' | 'over'
-
-export interface Height {
-  h: number
-  middlePointLeftDiagonal: Point
-  middlePointRightDiagonal: Point
-}
+export type SidePosition = 'left' | 'right' | 'over'
 export interface Vertices {
   ldt: Point
   ldb: Point
@@ -31,15 +25,12 @@ export interface Vertices {
   lb: Point
 }
 export type SliceInfo<T> = CumulativePercentage<T> & {
-  side: Side
-  area: number
-  cumulativeArea: number
-  tmpL: number
-  cumulativeL: number
-  l: number
-  height: Height
+  sidePosition: SidePosition
   vertices: Vertices
+  height: number
+  middlePointLeftDiagonal: Point
+  middlePointRightDiagonal: Point
   leftDiagonalLenght: number
   rightDiagonalLenght: number
-  slicePath: string
+  path: string
 }
