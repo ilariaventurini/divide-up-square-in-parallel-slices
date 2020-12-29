@@ -6,11 +6,11 @@ Divide a square in parallel slices whose area is proportional to the data
 </div>
 
 <p align="center">
-  <!-- npm version 
+  <!-- npm version -->
   <a href="https://www.npmjs.com/package/divide-up-square-in-parallel-slices">
     <img alt="npm"
       src="https://img.shields.io/npm/v/divide-up-square-in-parallel-slices">
-  </a>-->
+  </a>
 </p>
 
 </div>
