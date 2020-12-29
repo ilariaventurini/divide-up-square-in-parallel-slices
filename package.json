@@ -16,7 +16,10 @@
     "square",
     "geometry",
     "trapezoid",
-    "slice"
+    "slice",
+    "area",
+    "proportional",
+    "parallel"
   ],
   "main": "dist/index.js",
   "files": [
