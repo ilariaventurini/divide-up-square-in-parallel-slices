@@ -22,9 +22,9 @@ Here is an example:
 
 ![step1](https://user-images.githubusercontent.com/44204353/103179908-cf93ea00-4890-11eb-842b-8f7d56e98152.png)
 
-This means that the red slice (`S1`) has area equal to 30% of the area of ​​the square, the blue slice (`S2`) also, and the blue slice (`S3`) has area equal to 40% of the square total area.
+This means that the red slice (`S1`) has area equal to 30% of the area of ​​the square, the blue slice (`S2`) also, and the green slice (`S3`) has area equal to 40% of the total square area.
 
-## ⚙️ Install
+## Install
 
 ```bash
 yarn add divide-up-square-in-parallel-slices
@@ -36,13 +36,13 @@ or
 npm install divide-up-square-in-parallel-slices --save
 ```
 
-## 📷 Screenshots
+## Screenshots
 
 ![demo](https://user-images.githubusercontent.com/44204353/103179904-cacf3600-4890-11eb-9eed-687a068f2427.gif)
 
-## 🐝 API
+## API
 
-As seen before, you can create parallel slices proportional by square area.
+As seen before, you can create parallel slices proportional to square area.
 
 ### `computeSquareSlices(dataset, squareSide)`
 
@@ -50,10 +50,10 @@ The `computeSquareSlices` function accepts two parameters and returns an array o
 
 #### Parameters
 
-| Argument     | Type     | Description                                                                            |
-| ------------ | -------- | -------------------------------------------------------------------------------------- |
-| `dataset`    | `T[]`    | array of objects, each object must contains a `percentage` property (number in [0, 1]) |
-| `squareSide` | `number` | square side                                                                            |
+| Argument     | Type     | Description                                                                              |
+| ------------ | -------- | ---------------------------------------------------------------------------------------- |
+| `dataset`    | `T[]`    | array of objects, each object must contains a `percentage` property (number in `[0, 1]`) |
+| `squareSide` | `number` | square side lenght                                                                       |
 
 **Note**: the sum of `percentage` values must be 1.
 
@@ -73,9 +73,9 @@ The returned array contains one object for each slice. Each object has these pro
 | Property name              | Type                        | Description                                                        |
 | -------------------------- | --------------------------- | ------------------------------------------------------------------ |
 | `...datum`                 | /                           | the original `dataset` object info                                 |
-| `percentage`               | `number`                    | number in [0, 1]                                                   |
+| `percentage`               | `number`                    | number in `[0, 1]`                                                 |
 | `cumulativePercentage`     | `number`                    | cumulative percentage value                                        |
-| `sidePosition`             | `'left' | 'right' | 'over'` | slice position compared to square diagonal                         |
+| `sidePosition`             | `left` or `right` or `over` | slice position compared to square diagonal                         |
 | `vertices`                 | `Vertices`                  | slice vertices coordinates                                         |
 | `height`                   | `number`                    | slice height                                                       |
 | `middlePointLeftDiagonal`  | `Point`                     | coordinates of the point at the center of the slice left diagonal  |
@@ -143,11 +143,15 @@ In particular:
 
 ![stepS1](https://user-images.githubusercontent.com/44204353/103180717-9b242c00-4898-11eb-820e-9f9e96df0635.png)
 
+the red slice has `side = left` because it lays on the left side of the square diagonal (the diagonal that connects the top-left vertice to the bottom-right vertice).
+
 ![stepS2](https://user-images.githubusercontent.com/44204353/103180718-9cedef80-4898-11eb-880d-1ad0d5e49032.png)
 
-and so on...
+the blue slice has `side = over` because its area it's above the square diagonal.
 
-## 🙈 Demo page
+And so on...
+
+## Demo page
 
 A [demo page](https://divide-up-square-in-parallel-slices.netlify.app/) is available.
 
