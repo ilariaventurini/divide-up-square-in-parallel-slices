@@ -1,8 +1,8 @@
 <div align="center" style="text-align: center;">
   <h1>Divide a square in parallel slices</h1>
 
-Divide a square in parallel slices whose area is proportional to the data\
-[demo page](https://divide-up-square-in-parallel-slices.netlify.app/)
+Divide a square in parallel slices whose area is proportional to the data
+<!-- [demo page](https://divide-up-square-in-parallel-slices.netlify.app/) -->
 </div>
 
 <p align="center">
@@ -151,9 +151,9 @@ the blue slice has `side = over` because its area it's above the square diagonal
 
 And so on...
 
-## Demo page
+<!-- ## Demo page
 
-A [demo page](https://divide-up-square-in-parallel-slices.netlify.app/) is available.
+A [demo page](https://divide-up-square-in-parallel-slices.netlify.app/) is available. -->
 
 ## License
 
