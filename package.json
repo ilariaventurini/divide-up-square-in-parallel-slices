@@ -1,6 +1,6 @@
 {
   "name": "divide-up-square-in-parallel-slices",
-  "description": "",
+  "description": "Divide a square into parallel slices whose area is proportional to the data",
   "version": "0.0.1",
   "repository": {
     "type": "git",
